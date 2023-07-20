@@ -14,10 +14,13 @@ cam.set(cv2.CAP_PROP_FOURCC,cv2.VideoWriter_fourcc(* 'MJPG'))
 
 while True:
     ignore, frame = cam.read()
-    
+    frame = cv2.resize(frame, int(width/columns),int(height/columns))
     for i in range(0, rows):
         for j in range(0,columns):
-            
+            windName = "Webcam"+ str(i) + " x " + str(j)
+            cv2.imshow(windName,frame)
+            cv2.moveWindow(windName,int(width/columns)*j, int(height/columns)*i)
+
 
 
 
