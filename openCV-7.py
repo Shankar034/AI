@@ -18,6 +18,10 @@ while True:
                 nowColor=whiteColor
             else:
                 nowColor=darkColor
+        if nowColor==darkColor:
+            nowColor=whiteColor
+        else:
+            nowColor=darkColor
     cv2.imshow('Webcam',x)
     if cv2.waitKey(1) & 0xff==ord('q'):
         break
