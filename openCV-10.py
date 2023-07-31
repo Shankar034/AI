@@ -18,6 +18,7 @@ fpsFilter=30
 time.sleep(0.1)
 while True:
     dt= time.time()-tLast
+    
     fps=1/dt
     fpsFilter= fpsFilter*0.9 + fps*0.1
     tLast=time.time()
