@@ -10,6 +10,8 @@ radius= 50
 circleColor=(100,0,100)
 cWidth=2
 webText = 'I am God.'
+fHeight = 1
+FThickness =2
 
 cam = cv2.VideoCapture(0,cv2.CAP_DSHOW)
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT,height)
@@ -22,7 +24,7 @@ while True:
     frame[100:250,100:250]=(10,100,200)
     cv2.rectangle(frame,(100,100),(250,250),(120,100,10),8)
     cv2.circle(frame,cCenter,radius,circleColor,cWidth)
-    cv2.putText(frame,webText,(200,90),cv2.FONT_HERSHEY_COMPLEX,1,(10,200,20),2)
+    cv2.putText(frame,webText,(200,90),cv2.FONT_HERSHEY_COMPLEX,fHeight,(10,200,20),FThickness)
     cv2.imshow("Webcam",frame)
     cv2.moveWindow("Webcam",0,0)
     if cv2.waitKey(1) & 0xff == ord('q'):
