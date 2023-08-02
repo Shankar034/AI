@@ -1,6 +1,6 @@
 import cv2
 print(cv2.__version__)
-cvt=0
+evt=0
 
 def mouseClick(event, xPos, yPos, flags, params):
     global evt 
@@ -14,6 +14,11 @@ def mouseClick(event, xPos, yPos, flags, params):
         print("The event was : ", event)
         print("The point is ",xPos,yPos)
         evt = event
+    if event == cv2.EVENT_RBUTTONUP:
+        print("The event was : ", event)
+        print("The point is ",xPos,yPos)
+        evt = event
+        pvt=(xPos,yPos)
 
 
 height = 480
@@ -24,7 +29,7 @@ cam.set(cv2.CAP_PROP_FRAME_HEIGHT,height)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH,width)
 cam.set(cv2.CAP_PROP_FPS,30)
 cam.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
-cv2.
+cv2.namedWindow("Webcam")
 cv2.setMouseCallback("Webcam", mouseClick)
 
 while True:
