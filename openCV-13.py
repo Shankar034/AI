@@ -13,7 +13,11 @@ def mouseClick(event, xPos, yPos, flags, params):
         print(" The mouse Event was :",event)
         print("The position is ",xPos,yPos)
         evt = event
-       
+    if event == cv2.EVENT_RBUTTONUP:
+        print(" The mouse Event was :",event)
+        print("The position is ",xPos,yPos)
+        pvt=(xPos,yPos)
+        evt = event
 
 
 
@@ -30,7 +34,7 @@ cv2.setMouseCallback("WebCam",mouseClick)
 
 while True:
     ignore, frame = cam.read()
-    if evt==1:
+    if evt==1 or evt ==4:
         cv2.circle(frame,pvt,30,(120,180,1),2)
     cv2.imshow("WebCam",frame)
     cv2.moveWindow("WebCam",10,10)
