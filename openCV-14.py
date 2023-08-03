@@ -16,6 +16,9 @@ def mouseClick(event, xPos, yPos, flags, params):
         print("The point is ",xPos,yPos)
         evt = event
         pvt2=(xPos,yPos)
+    if event == cv2.EVENT_RBUTTONUP:
+        print(event)
+        evt= event
     
 
 
@@ -37,6 +40,9 @@ while True:
         ROI= frame[pvt1[1]:pvt2[1], pvt1[0]:pvt2[0]]
         cv2.imshow("ROI",ROI)
         cv2.moveWindow("ROI",int(width*1.1),0)
+    if evt == 5:
+        cv2.destroyWindow("ROI")
+        evt=0
     cv2.imshow("Webcam",frame)
     cv2.moveWindow("Webcam",10,10)
     if cv2.waitKey(1) & 0xff == ord('q'):
