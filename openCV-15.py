@@ -2,29 +2,28 @@ import cv2
 
 print(cv2.__version__)
 
-evt=0
+def myCallBack1(val):
+    global xPos
+    print("xPos is : ",val)
+    xPos=val
 
-def mouseClick(event, xPos, yPos, flags, params):
-    global evt 
-    global pnt1
-    global pnt2
-    if event == cv2.EVENT_LBUTTONDOWN:
-        print(event)
-        evt = event
-        pnt1 = (xPos,yPos)
 
-    if event ==cv2.EVENT_LBUTTONUP:
-        print(event)
-        evt= event
-        pnt2 = (xPos, yPos)
-    
-    if event == cv2.EVENT_RBUTTONUP:
-        print(event)
-        evt= event
+def myCallBack2(val):
+    global yPos
+    print('yPos is: ',val)
+    yPos=val
 
-height=480
-width=640
+def myCallBack3(val):
+    global radius
+    print('Radius is : ',val)
+    radius=val
 
+
+height=580
+width=740
+xPos=int(width/2)
+yPos=int(height/2)
+radius = 20
 
 cam= cv2.VideoCapture(0,cv2.CAP_DSHOW)
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT,height)
@@ -32,20 +31,19 @@ cam.set(cv2.CAP_PROP_FRAME_WIDTH,width)
 cam.set(cv2.CAP_PROP_FPS,30)
 cam.set(cv2.CAP_PROP_FOURCC,cv2.VideoWriter_fourcc(*'MJPG'))
 cv2.namedWindow("Webcam")
-cv2.setMouseCallback("Webcam",mouseClick)
+cv2.resizeWindow("Webcam",460,340)
+cv2.moveWindow("Webcam",width,0)
+cv2.createTrackbar("xPos ","Webcam",xPos,760,myCallBack1)
+cv2.createTrackbar("yPos ","Webcam",yPos,580,myCallBack2)
+cv2.createTrackbar("Radius ","Webcam",radius,290,myCallBack3)
+
+
 
 while True:
     ignore, frame= cam.read()
-    if evt == 4:
-        cv2.rectangle(frame,pnt1,pnt2,(100,155,200),2)
-        ROI = frame[pnt1[1]:pnt2[1], pnt1[0]:pnt2[0]]
-        cv2.imshow("ROI", ROI)
-        cv2.moveWindow("ROI", int(width*1.1),0)
-    if evt ==5:
-        cv2.destroyWindow("ROI")
-        evt=0
-    cv2.imshow("Webcam",frame)
-    cv2.moveWindow("Webcam",10,10)
+    cv2.circle(frame,(xPos,yPos),radius,(122,0,122),3)
+    cv2.imshow("My Webcam",frame)
+    cv2.moveWindow("My Webcam",10,10)
     if cv2.waitKey(1) & 0xff== ord('q'):
         break
 cam.release()
