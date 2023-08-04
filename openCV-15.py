@@ -17,13 +17,17 @@ def myCallBack3(val):
     global radius
     print('Radius is : ',val)
     radius=val
-
+def myCallBack4(val):
+    global thickness
+    print('Thickness is : ',val)
+    thickness=val
 
 height=580
 width=740
 xPos=int(width/2)
 yPos=int(height/2)
 radius = 20
+thickness =2
 
 cam= cv2.VideoCapture(0,cv2.CAP_DSHOW)
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT,height)
@@ -36,12 +40,16 @@ cv2.moveWindow("Webcam",width,0)
 cv2.createTrackbar("xPos ","Webcam",xPos,760,myCallBack1)
 cv2.createTrackbar("yPos ","Webcam",yPos,580,myCallBack2)
 cv2.createTrackbar("Radius ","Webcam",radius,290,myCallBack3)
+cv2.createTrackbar("Thickness ","Webcam",thickness,7,myCallBack4)
+
 
 
 
 while True:
     ignore, frame= cam.read()
-    cv2.circle(frame,(xPos,yPos),radius,(122,0,122),3)
+    if thickness ==0:
+        thickness =(-1)
+    cv2.circle(frame,(xPos,yPos),radius,(122,0,122),thickness)
     cv2.imshow("My Webcam",frame)
     cv2.moveWindow("My Webcam",10,10)
     if cv2.waitKey(1) & 0xff== ord('q'):
