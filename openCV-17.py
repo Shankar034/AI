@@ -37,8 +37,11 @@ while True:
         x= np.zeros([220,220,3], dtype = np.uint8)
         clr= frame[yVal][xVal]
         print(clr)
+        x[:,:]=clr
+        cv2.putText(x,str(clr),(0,50),cv2.FONT_HERSHEY_COMPLEX,1,(68,54,58))
         cv2.imshow("The Window",x)
         cv2.moveWindow("The Window",width,0)
+        evt =0
     cv2.imshow("WebCam",frame)
     cv2.moveWindow("WebCam",0,0)
     if cv2.waitKey(1) & 0xff==ord('q'):
