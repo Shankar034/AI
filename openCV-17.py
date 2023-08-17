@@ -38,7 +38,7 @@ while True:
         clr= frame[yVal][xVal]
         print(clr)
         x[:,:]=clr
-        cv2.putText(x,str(clr),(0,50),cv2.FONT_HERSHEY_COMPLEX,1,(68,54,58))
+        cv2.putText(x,str(clr),(0,50),cv2.FONT_HERSHEY_COMPLEX,1,(68,54,58),1)
         cv2.imshow("The Window",x)
         cv2.moveWindow("The Window",width,0)
         evt =0
