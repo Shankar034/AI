@@ -1,5 +1,5 @@
 import cv2
-
+import numpy as np
 
 def onTrack1(pos):
     global huelow
@@ -41,6 +41,12 @@ cv2.createTrackbar("low high", "NewWin",110,255,onTrack6)
 
 while True:
     ignore, frame= cam.read()
+    frameHSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    lowerbound = np.array([huelow, SatLow, ValueLow])
+    upperbound = np.array([hueHigh, SatHigh, ValueHigh])
+    myMask = cv2.inRange(frameHSV, lowerbound, upperbound)
+    cv2.imshow("HSV",myMask)
+    cv2.moveWindow("HSV", int(width/2), int(height/2))
     cv2.imshow("WebCam",frame)
     cv2.moveWindow("WebCam",0,0)
     if cv2.waitKey(1) & 0xff==ord('q'):
