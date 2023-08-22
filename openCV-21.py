@@ -3,6 +3,18 @@ import numpy as np
 
 print(cv2.__version__)
 
+HueLow=90
+HueHigh=100
+
+HueLow1=90
+HueHigh1=100
+
+SaturationLow=20
+SaturationHigh=200
+
+ValueLow=20
+ValueHigh=200
+
 def trackbar1(val):
     global HueLow
     print(val)
@@ -46,14 +58,15 @@ cam.set(cv2.CAP_PROP_FOURCC,cv2.VideoWriter_fourcc(*'MJPG'))
 
 cv2.namedWindow("FPS")
 cv2.moveWindow("FPS", width,0)
+
 cv2.createTrackbar("Hue Low", "FPS",10,179,trackbar1)
 cv2.createTrackbar("Hue High", "FPS",20,179,trackbar2)
-cv2.createTrackbar("Hue Low1", "FPS",10,179,trackbar7)
-cv2.createTrackbar("Hue High1", "FPS",20,179,trackbar8)
 cv2.createTrackbar("Saturation Low", "FPS",10,255,trackbar3)
 cv2.createTrackbar("Saturation High", "FPS",250,255,trackbar4)
 cv2.createTrackbar("Value Low", "FPS",10,255,trackbar5)
 cv2.createTrackbar("Value High", "FPS",250,255,trackbar6)
+cv2.createTrackbar("Hue Low1", "FPS",10,179,trackbar7)
+cv2.createTrackbar("Hue High1", "FPS",20,179,trackbar8)
 
 while True:
     ignore, frame = cam.read()
@@ -63,27 +76,35 @@ while True:
 
     lowerBond1 = np.array([HueLow1,SaturationLow, ValueLow])
     upperBond1 = np.array([HueHigh1, SaturationHigh, ValueHigh])
-    maskH = cv2.inRange(frameHSV,lowerBond,upperBond)
-    maskS = cv2.inRange(frameHSV,lowerBond1,upperBond1)
+    myMask = cv2.inRange(frameHSV,lowerBond,upperBond)
+    myMask2 = cv2.inRange(frameHSV,lowerBond1,upperBond1)
     
-    maskS= maskS | maskH
+    myMask= myMask | myMask2
 
-    # maskS = cv2.add(maskH,maskS)
-    # maskS = np.logical_or(maskH,maskS)
+    # myMask = cv2.add(myMask,myMask2)
+    # myMask = np.logical_or(myMask,myMask2)
+
+    # myMask= cv2.bitwise_not(myMask)
 
 
-    frameall= cv2.bitwise_and(frame,frame,mask=maskS)
-    frameS1= cv2.bitwise_and(frame,frame,mask=maskS)
+    myMasksmall= cv2.resize(myMask,(int(width/2),int(Height/2)))
+    mySelection= cv2.bitwise_and(frame,frame,mask=myMask)
+    mySelection= cv2.resize(mySelection,(int(width/2),int(Height/2)))
 
-    frameall= cv2.resize(maskS,(int(width/2),int(Height/2)))
-    frameS= cv2.resize(frameS1,(int(width/2),int(Height/2)))
 
-    cv2.imshow("Frame", frame)
-    cv2.moveWindow("Frame", 10, 10)
-    cv2.imshow("FrameH", frameall)
-    cv2.moveWindow("FrameH",10, Height)
-    cv2.imshow("FrameS", frameS)
-    cv2.moveWindow("FrameS", int(width/2), Height)
+    # frameS1= cv2.bitwise_and(frame,frame,mask=myMask)
+
+
+    cv2.imshow("my selection", mySelection)
+    cv2.moveWindow("my selection", int(width/2), Height)
+
+    cv2.imshow("my mask", myMasksmall)
+    cv2.moveWindow("my mask", 0, Height)
+
+    cv2.imshow("my Webcam", frame)
+    cv2.moveWindow("my Webcam",0, 0)
+
+
     if cv2.waitKey(1) & 0xff ==ord('q'):
         break
 cam.release()
