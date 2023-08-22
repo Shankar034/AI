@@ -65,16 +65,22 @@ while True:
     upperBond1 = np.array([HueHigh1, SaturationHigh, ValueHigh])
     maskH = cv2.inRange(frameHSV,lowerBond,upperBond)
     maskS = cv2.inRange(frameHSV,lowerBond1,upperBond1)
+    
+    maskS= maskS | maskH
 
-    frameH1= cv2.bitwise_and(frame,frame,mask=maskH)
+    # maskS = cv2.add(maskH,maskS)
+    # maskS = np.logical_or(maskH,maskS)
+
+
+    frameall= cv2.bitwise_and(frame,frame,mask=maskS)
     frameS1= cv2.bitwise_and(frame,frame,mask=maskS)
 
-    frameH= cv2.resize(frameH1,(int(width/2),int(Height/2)))
+    frameall= cv2.resize(maskS,(int(width/2),int(Height/2)))
     frameS= cv2.resize(frameS1,(int(width/2),int(Height/2)))
 
     cv2.imshow("Frame", frame)
     cv2.moveWindow("Frame", 10, 10)
-    cv2.imshow("FrameH", frameH)
+    cv2.imshow("FrameH", frameall)
     cv2.moveWindow("FrameH",10, Height)
     cv2.imshow("FrameS", frameS)
     cv2.moveWindow("FrameS", int(width/2), Height)
