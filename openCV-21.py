@@ -89,8 +89,11 @@ while True:
     # cv2.drawContours(frame,counters, -1,(255,0,0),3)
 
     for counter in counters:
-        cv2.drawContours(frame,[counter], 0,(255,0,0),3)
-        cv2.boundingRect(counter)
+        area = cv2.contourArea(counter)
+        if area >= 200:
+            # cv2.drawContours(frame,[counter], 0,(255,0,0),3)
+            x,y,w,h=cv2.boundingRect(counter)
+            cv2.rectangle(frame,(x,y),(x+w,y+h),(0,120,255),3)
 
 
     myMasksmall= cv2.resize(myMask,(int(width/2),int(Height/2)))
