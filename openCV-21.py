@@ -85,6 +85,12 @@ while True:
     # myMask = np.logical_or(myMask,myMask2)
 
     # myMask= cv2.bitwise_not(myMask)
+    counters, junk = cv2.findContours(myMask,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # cv2.drawContours(frame,counters, -1,(255,0,0),3)
+
+    for counter in counters:
+        cv2.drawContours(frame,[counter], 0,(255,0,0),3)
+        cv2.boundingRect(counter)
 
 
     myMasksmall= cv2.resize(myMask,(int(width/2),int(Height/2)))
