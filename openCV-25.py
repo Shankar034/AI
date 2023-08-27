@@ -1,6 +1,6 @@
 import cv2
 import face_recognition as FR
-
+name='Unknown Face'
 font=cv2.FONT_HERSHEY_SIMPLEX
 donFace = FR.load_image_file('C:/Users/Dell/Documents/Python/demoimages/known/Donald Trump.jpg')
 faceloc = FR.face_locations(donFace)[0]
@@ -13,7 +13,7 @@ nancyEncoding= FR.face_encodings(nancyFace)[0]
 knownEncoding = [donEncoding,nancyEncoding]
 names= ["Donald Trump","Nancy Pelosi"]
 
-unknownFace = FR.load_image_file('C:/Users/Dell/Documents/Python/demoimages/unknown/u4.jpg')
+unknownFace = FR.load_image_file('C:/Users/Dell/Documents/Python/demoimages/unknown/u5.jpg')
 unknownFaceBGR = cv2.cvtColor(unknownFace, cv2.COLOR_RGB2BGR)
 faceLocations = FR.face_locations(unknownFace)
 unknownEncodings = FR.face_encodings(unknownFace,faceLocations)
@@ -34,7 +34,7 @@ cv2.imshow("Image",unknownFaceBGR)
 
 
 
-cv2.waitKey(5000)
+cv2.waitKey(10000)
 
 
 # print(faceloc)
